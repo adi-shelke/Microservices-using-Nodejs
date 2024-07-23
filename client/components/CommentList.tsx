@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setComments, addComment } from "@/lib/Features/comments/commentSlice";
+import { setComments } from "@/lib/Features/comments/commentSlice";
 import { RootState } from "@/lib/store";
 import axios from "axios";
 

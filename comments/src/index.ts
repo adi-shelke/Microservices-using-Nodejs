@@ -34,7 +34,7 @@ app.post("/posts/:id/comments", (req, res) => {
 
   commentsByPostId[req.params.id] = comments;
 
-  res.status(201).send(comments);
+  res.status(201).send({ commentId, content });
 });
 
 app.listen(4001, () => {

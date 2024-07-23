@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import GenericCreateForm from "./GenericCreateForm";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { addComment } from "@/lib/Features/comments/commentSlice";
 
 const CreateComment: React.FC<{ postId: string }> = ({ postId }) => {
-  const [commentText, setcommentText] = useState("")
-  const addComment = async (
+  const dispatch = useDispatch();
+  const [commentText, setcommentText] = useState("");
+  const addCommentTopost = async (
     event: React.FormEvent,
     postId?: string,
     content?: string
   ) => {
     event.preventDefault();
     const url = `http://localhost:4001/posts/${postId}/comments`;
-    await axios.post(url, {
-      content,
-    });
+
+    const response = await axios.post(url, { content: commentText });
+    const newComment = response.data;
+
+    if (!postId || !content) {
+      console.error("Post ID and comment content are required.");
+      return;
+    }
+
+    dispatch(addComment({ postId, comment: newComment }));
+
     setcommentText("");
   };
   return (
@@ -21,7 +33,7 @@ const CreateComment: React.FC<{ postId: string }> = ({ postId }) => {
       title=""
       state={commentText}
       setState={setcommentText}
-      onSubmit={addComment}
+      onSubmit={addCommentTopost}
       parentComponent="CreateComment"
       postId={postId}
     />
