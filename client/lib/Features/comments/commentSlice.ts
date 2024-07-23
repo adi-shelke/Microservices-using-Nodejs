@@ -6,23 +6,25 @@ interface Comment {
   content: string;
 }
 
-interface CommentState {
-  comments: Comment[];
+interface CommentsState {
+  [postId: string]: Comment[];
 }
 
-const initialState: CommentState = {
-  comments: [],
-};
+const initialState: CommentsState = {};
 
 const commentsSlice = createSlice({
   name: "comments",
   initialState,
   reducers: {
-    setComments: (state, action: PayloadAction<Comment[]>) => {
-      state.comments = action.payload;
-    },
-    addComment: (state, action: PayloadAction<Comment>) => {
-      state.comments.push(action.payload);
+    setComments(state, action: PayloadAction<{ postId: string, comments: Comment[] }>) {
+        state[action.payload.postId] = action.payload.comments;
+      },
+
+    addComment(state, action: PayloadAction<{ postId: string, comment: Comment }>) {
+      if (!state[action.payload.postId]) {
+        state[action.payload.postId] = [];
+      }
+      state[action.payload.postId].push(action.payload.comment);
     },
   },
 });

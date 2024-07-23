@@ -16,8 +16,13 @@ interface CommentsByPost {
 
 const commentsByPostId: CommentsByPost = {};
 
+// app.get("/posts/:id/comments", (req, res) => {
+//   res.send(commentsByPostId[req.params.id] || []);
+// });
 app.get("/posts/:id/comments", (req, res) => {
-  res.send(commentsByPostId[req.params.id] || []);
+  const postId = req.params.id;
+  const comments = commentsByPostId[postId] || [];
+  res.send({ postId, comments });
 });
 
 app.post("/posts/:id/comments", (req, res) => {
