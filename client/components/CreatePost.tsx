@@ -30,7 +30,7 @@ const CreatePost = () => {
     <GenericCreateForm
       title={"Post Title"}
       state={postTitle}
-      setTitle={setpostTitle}
+      setState={setpostTitle}
       onSubmit={handleSubmit}
       parentComponent="CreatePost"
     />

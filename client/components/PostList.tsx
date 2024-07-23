@@ -16,12 +16,12 @@ interface Post {
 const PostList = () => {
   const posts = useSelector((state: RootState) => state.posts.posts);
   const dispatch = useDispatch();
-  // const [posts, setposts] = useState<Record<string, Post>>(initialPosts);
-
+  
   const fetchPosts = async () => {
     const res = await axios.get("http://localhost:4000/posts");
     dispatch(setPosts(res.data));
   };
+  
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -29,21 +29,20 @@ const PostList = () => {
   const postArray = Object.values(posts);
 
   return (
-    <div className="mx-auto ">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {postArray.map((post) => (
-          <div
-            className=" shadow-lg shadow-cyan-500/50 p-4 h-[300px]"
-            key={post.postId}
-          >
-            <div>
-              <h3 className="text-[20px]">{post.title}</h3>
-              <CreateComment />
-            </div>
+    <div className="flex flex-wrap justify-around mx-auto">
+      {postArray.map((post) => (
+        <div
+          className="shadow-lg shadow-cyan-500/50 p-4 m-2 flex flex-col w-[300px] h-[300px]"
+          key={post.postId}
+        >
+          <div className="flex-grow">
+            <h3 className="text-[20px]">{post.title}</h3>
+            <CreateComment postId={post.postId}/>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
+
 export default PostList;

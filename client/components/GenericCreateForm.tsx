@@ -3,30 +3,40 @@ interface GenericCreateFormProps {
   title: string;
   state: string;
   parentComponent: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  onSubmit: (event: React.FormEvent) => void;
+  postId?: string;
+  setState: React.Dispatch<React.SetStateAction<string>>;
+  onSubmit: (event: React.FormEvent, postId?: string, content?: string) => void;
 }
 const GenericCreateForm: React.FC<GenericCreateFormProps> = ({
   title,
   state,
-  setTitle,
+  setState,
   onSubmit,
+  postId,
   parentComponent,
 }) => {
-  const containerClass = `w-[${
-    parentComponent === "CreatePost" ? "300px" : "180px"
-  }]`;
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (parentComponent === "CreateComment" && postId) {
+      onSubmit(event, postId, state);
+    } else {
+      onSubmit(event);
+    }
+  };
+  const containerClass =
+    parentComponent === "CreatePost" ? "w-[300px] mb-6" : "w-[180px] mb-6";
   return (
     <div className={containerClass}>
-      <form onSubmit={onSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="">
+        <div className="">
           <label htmlFor="title-input">{title}</label>
+          <br />
           <input
             id="title-input"
-            className="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="my-2 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             value={state}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setState(e.target.value)}
           />
         </div>
         <button
