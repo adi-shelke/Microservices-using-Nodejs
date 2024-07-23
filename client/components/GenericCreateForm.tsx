@@ -37,6 +37,7 @@ const GenericCreateForm: React.FC<GenericCreateFormProps> = ({
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
+            placeholder={parentComponent === "CreateComment" ? "Add a comment" : "Enter a title"}
           />
         </div>
         <button
