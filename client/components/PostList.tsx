@@ -7,6 +7,7 @@ import axios from "axios";
 import CreatePost from "./CreatePost";
 import GenericCreateForm from "./GenericCreateForm";
 import CreateComment from "./CreateComment";
+import CommentList from "./CommentList";
 
 interface Post {
   postId: string;
@@ -16,12 +17,12 @@ interface Post {
 const PostList = () => {
   const posts = useSelector((state: RootState) => state.posts.posts);
   const dispatch = useDispatch();
-  
+
   const fetchPosts = async () => {
     const res = await axios.get("http://localhost:4000/posts");
     dispatch(setPosts(res.data));
   };
-  
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -36,8 +37,9 @@ const PostList = () => {
           key={post.postId}
         >
           <div className="flex-grow">
-            <h3 className="text-[20px]">{post.title}</h3>
-            <CreateComment postId={post.postId}/>
+            <h3 className="text-[20px] font-bold">{post.title}</h3>
+            <CommentList postId={post.postId}/>
+            <CreateComment postId={post.postId} />
           </div>
         </div>
       ))}
