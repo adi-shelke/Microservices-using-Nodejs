@@ -21,20 +21,13 @@ const CommentList: React.FC<{ postId: string }> = ({ postId }) => {
     loadComments();
   }, [postId, dispatch]);
 
+  const renderedComments = comments?.map((comment) => {
+    return <li key={comment.commentId}>{`• ${comment.content}`}</li>;
+  });
   return (
     <div className="mt-2">
-      <h3 className="mb-2 font-semibold">Comments</h3>
-      {comments?.length ? (
-        <ul>
-          {comments.map((comment) => (
-            <li key={comment.commentId} className="">
-              <p>{`* ${comment.content}`}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No comments available.</p>
-      )}
+      <h3 className="mb-2 font-semibold">{`${comments?.length} Comments`}</h3>
+      <ul className="ml-3">{renderedComments}</ul>
     </div>
   );
 };

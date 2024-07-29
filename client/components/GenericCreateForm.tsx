@@ -24,10 +24,10 @@ const GenericCreateForm: React.FC<GenericCreateFormProps> = ({
     }
   };
   const containerClass =
-    parentComponent === "CreatePost" ? "w-[300px] mb-6" : "w-[180px] mb-6";
+    parentComponent === "CreatePost" ? "w-full mb-6" : "w-[180px] mb-6";
   return (
     <div className={containerClass}>
-      <form onSubmit={handleSubmit} className="">
+      <form onSubmit={handleSubmit}>
         <div className="">
           <label htmlFor="title-input">{title}</label>
           <br />
@@ -36,6 +36,7 @@ const GenericCreateForm: React.FC<GenericCreateFormProps> = ({
             className="my-2 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             value={state}
+            required
             onChange={(e) => setState(e.target.value)}
             placeholder={parentComponent === "CreateComment" ? "Add a comment" : "Enter a title"}
           />
