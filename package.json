@@ -1,0 +1,16 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "scripts": {
+    "start-all": "concurrently \"npm run start-nextjs\" \"npm run start-api1\" \"npm run start-api2\" \"npm run start-api3\" \"npm run start-api4\" \"npm run start-api5\"",
+    "start-nextjs": "cd ./client && npm run dev",
+    "start-api1": "cd ./posts && npm run dev",
+    "start-api2": "cd ./comments && npm run dev",
+    "start-api3": "cd ./query && npm run dev",
+    "start-api4": "cd ./moderation && npm run dev",
+    "start-api5": "cd ./event-bus && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
