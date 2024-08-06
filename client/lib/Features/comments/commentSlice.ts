@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface Comment {
   commentId: string;
   content: string;
+  status: string;
 }
 
 interface CommentsState {
@@ -16,11 +17,17 @@ const commentsSlice = createSlice({
   name: "comments",
   initialState,
   reducers: {
-    setComments(state, action: PayloadAction<{ postId: string, comments: Comment[] }>) {
-        state[action.payload.postId] = action.payload.comments;
-      },
+    setComments(
+      state,
+      action: PayloadAction<{ postId: string; comments: Comment[] }>
+    ) {
+      state[action.payload.postId] = action.payload.comments;
+    },
 
-    addComment(state, action: PayloadAction<{ postId: string, comment: Comment }>) {
+    addComment(
+      state,
+      action: PayloadAction<{ postId: string; comment: Comment }>
+    ) {
       if (!state[action.payload.postId]) {
         state[action.payload.postId] = [];
       }

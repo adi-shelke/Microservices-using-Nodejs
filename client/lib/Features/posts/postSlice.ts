@@ -1,9 +1,15 @@
 "use client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+interface Comment{
+  "commentId": string;
+  "content": string;
+}
+
 interface Post {
   postId: string;
   title: string;
+  comments: Comment[];
 }
 
 interface PostsState {

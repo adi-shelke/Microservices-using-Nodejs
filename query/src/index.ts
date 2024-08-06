@@ -8,6 +8,7 @@ app.use(cors());
 interface Comment {
   commentId: string;
   content: string;
+  status: string;
 }
 
 interface Post {
@@ -37,10 +38,24 @@ app.post("/events", (req, res) => {
 
   //when a comment is created
   else if(type==="CommentCreated"){
-    const {postId,commentId,content}=data;
+    const {postId,commentId,content, status}=data;
     const post = posts[postId];
-    post.comments.push({commentId,content});
+    post.comments.push({commentId,content,status});
   }
+
+  //when comment is moderated
+  else if(type==="CommentModerated"){
+    const {postId,commentId,status,content}=data;
+    const post = posts[postId];
+    const comment = post.comments.find(comment=>{
+      return comment.commentId===commentId;
+    });
+    if(comment){
+      comment.status=status;
+      comment.content=content;  
+    }
+  }
+
   console.log("posts",posts);
   res.send({});
 });

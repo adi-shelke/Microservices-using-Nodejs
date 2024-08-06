@@ -18,13 +18,15 @@ const CreateComment: React.FC<{ postId: string }> = ({ postId }) => {
 
     const response = await axios.post(url, { content: commentText });
     const newComment = response.data;
+    newComment.status = "pending";
+
 
     if (!postId || !content) {
       console.error("Post ID and comment content are required.");
       return;
     }
 
-    dispatch(addComment({ postId, comment: newComment }));
+    dispatch(addComment({ postId, comment: newComment}));
 
     setcommentText("");
   };
